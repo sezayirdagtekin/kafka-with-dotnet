@@ -1,0 +1,85 @@
+PS D:\KAFKA\docker> ls
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        8/26/2020  10:59 AM            432 docker-compose.yml
+
+
+PS D:\KAFKA\docker> docker-compose build
+zookeeper uses an image, skipping
+kafka uses an image, skipping
+
+
+PS D:\KAFKA\docker> docker-compose up -d
+Creating mykafka    ... done
+Creating myzookeper ... done
+PS D:\KAFKA\docker>
+
+PS D:\KAFKA\docker> docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED              STATUS              PORTS                                  NAMES
+6372e372ea3d        wurstmeister/zookeeper:latest   "/bin/sh -c '/usr/sb…"   About a minute ago   Up About a minute   22/tcp, 2181/tcp, 2888/tcp, 3888/tcp   myzookeper
+2b721c0f0ce8        wurstmeister/kafka:latest       "start-kafka.sh"         About a minute ago   Up About a minute   0.0.0.0:9092->9092/tcp                 mykafka
+
+
+
+//LIST TOPIC-DEFAULT  DEFINE IN DOCKER-COMPOSE
+PS D:\KAFKA\docker> docker exec mykafka kafka-topics.sh --bootstrap-server localhost:9092 --list
+test
+PS D:\KAFKA\docker> docker exec mykafka kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --list
+test
+PS D:\KAFKA\docker>
+
+
+CREATE TOPIC
+PS D:\KAFKA\docker> docker exec mykafka kafka-topics.sh --bootstrap-server 0.0.0.0:9092 --create  --topic  topic1 --partitions 3 --replication-factor 1
+Created topic topic1.
+
+//LIST ALL TOPIC
+PS D:\KAFKA\docker> docker exec mykafka kafka-topics.sh --bootstrap-server localhost:9092 --list
+test
+topic1
+
+
+DESCRIBE TEST TOPIC
+PS D:\KAFKA\docker> docker exec mykafka kafka-topics.sh --bootstrap-server localhost:9092 -describe test
+Topic: test     PartitionCount: 1       ReplicationFactor: 1    Configs: segment.bytes=1073741824
+        Topic: test     Partition: 0    Leader: 1001    Replicas: 1001  Isr: 1001
+Topic: topic1   PartitionCount: 3       ReplicationFactor: 1    Configs: segment.bytes=1073741824
+        Topic: topic1   Partition: 0    Leader: 1001    Replicas: 1001  Isr: 1001
+        Topic: topic1   Partition: 1    Leader: 1001    Replicas: 1001  Isr: 1001
+        Topic: topic1   Partition: 2    Leader: 1001    Replicas: 1001  Isr: 1001
+
+PS D:\KAFKA\docker> docker exec mykafka kafka-topics.sh --bootstrap-server localhost:9092 -describe topic1
+Topic: test     PartitionCount: 1       ReplicationFactor: 1    Configs: segment.bytes=1073741824
+        Topic: test     Partition: 0    Leader: 1001    Replicas: 1001  Isr: 1001
+Topic: topic1   PartitionCount: 3       ReplicationFactor: 1    Configs: segment.bytes=1073741824
+        Topic: topic1   Partition: 0    Leader: 1001    Replicas: 1001  Isr: 1001
+        Topic: topic1   Partition: 1    Leader: 1001    Replicas: 1001  Isr: 1001
+        Topic: topic1   Partition: 2    Leader: 1001    Replicas: 1001  Isr: 1001
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+

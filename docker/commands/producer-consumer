@@ -1,0 +1,27 @@
+
+# Connect with the Kafka console consumer in another terminal
+PS D:\KAFKA\docker> docker exec mykafka kafka-console-consumer.sh --bootstrap-server localhost:9092  --group mygroup --topic topic1
+
+
+# Connect with the Kafka console producer in one terminal
+PS D:\KAFKA\docker> docker exec -it mykafka kafka-console-producer.sh  --bootstrap-server localhost:9092 --topic topic1
+>hi there
+>this is kafka producer
+>running in docker
+>
+
+
+#CHECK Kafka console consumer (not  run)
+hi there
+this is kafka producer
+running in docker
+
+
+
+#LOGS
+# Type a message in producer window to see the message printed out in consumer's
+# Observe the logs of the running docker-compose up (with no -d)
+  PS C:\> docker logs -f mykafka
+
+
+
